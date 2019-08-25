@@ -1,6 +1,21 @@
 ---
-layout: layout
+layout: page
 ---
 
-{% assign __ = site.data.languages[site.language] %}
-{% include category.html %}
+{% unless page.content == '' %}
+  {{ content }}
+{% endunless %}
+
+<ul class="posts-list">
+  {% assign category = page.category | default: page.title %}
+  {% for post in site.categories[category] %}
+    <li>
+      <h3>
+        <a href="{{ post.url | relative_url }}">
+          {{ post.title }}
+          <small>{{ post.date | date_to_string }}</small>
+        </a>
+      </h3>
+    </li>
+  {% endfor %}
+</ul>
