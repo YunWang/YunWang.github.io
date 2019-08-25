@@ -1,168 +1,119 @@
-# Hydeout
+# Tale
 
-Hydeout updates the original [Hyde](https://github.com/poole/hyde)
-theme for [Jekyll](http://jekyllrb.com) 3.x and adds new functionality.
+[![Gem Version](https://badge.fury.io/rb/tale.svg)](https://badge.fury.io/rb/tale)
 
-![Desktop](/_screenshots/1.png?raw=true)
-<img alt="Mobile home page" src="/_screenshots/2.png?raw=true" width="300px" />
-<img alt="Mobile post page" src="/_screenshots/3.png?raw=true" width="300px" />
+Tale is a minimal Jekyll theme curated for storytellers. Checkout the demo [here](https://chesterhow.github.io/tale/).
 
-### Usage
+![Tale screenshot](http://i.imgur.com/pXZrtmo.png)
 
-Hydeout is available as the `jekyll-theme-hydeout` Ruby Gem.
-Add `gem "jekyll-theme-hydeout", "~> 3.4"` to your Gemfile and run
-`bundle install`.
+## Features
+- Easy installation
+- Compatible with GitHub Pages
+- Responsive design (looks just as good on mobile)
+- Syntax highlighting, with the help of Pygments
+- Markdown and HTML text formatting
+- Pagination of posts
 
-If you're installing on Github pages, you may also have to add
-`remote_theme: fongandrew/hydeout` to your `_config.yml`. [See the Github
-instructions for more details.](https://help.github.com/articles/adding-a-jekyll-theme-to-your-github-pages-site/)
+## Installation
+There are 3 ways to install this theme
 
-Hydeout uses pagination, so if you have an `index.md`, you'll need to swap
-it with an `index.html` that uses the `index` layout:
+1. Install it as a Ruby Gem (for self-hosted sites)
+2. Install it with the `jekyll-remote-theme` plugin (for GitHub Pages hosted sites)
+3. Fork the project directly
 
-```
----
-layout: index
-title: Home
----
-```
+### Ruby Gem method
+1. Add this line to your `Gemfile`:
 
-You'll also need to add a setting to `_config.yml` telling Jekyll how many posts
-to include per page (e.g. `paginate: 5`).
-
-### Keep It Simple
-
-In keeping with the original Hyde theme, Hydeout aims to keep the overall
-design lightweight and plugin-free. JavaScript is currently limited only
-to Disqus and Google Analytics (and is only loaded if you provide configuration
-variables).
-
-Hydeout makes heavy use of Flexbox in its CSS. If Flexbox is not available,
-the CSS degrades into a single column layout.
-
-### Customization
-
-Hydeout replaces Hyde's class-based theming with the use
-of the following SASS variables:
-
-```scss
-$sidebar-bg-color: #202020 !default;
-$sidebar-fg-color: white !default;
-$sidebar-sticky: true !default;
-$layout-reverse: false !default;
-$link-color: #268bd2 !default;
+```ruby
+gem "tale"
 ```
 
-To override these variables, create your own `assets/css/main.scss` file.
-Define your own variables, then import in Hydeout's SCSS, like so:
+2. Install the theme's gems and dependencies:
 
-```scss
----
-# Jekyll needs front matter for SCSS files
----
-
-$sidebar-bg-color: #ac4142;
-$link-color: #ac4142;
-$sidebar-sticky: false;
-@import "hydeout";
+```bash
+$ bundle
 ```
 
-See the [_variables](_sass/hydeout/_variables.scss) file for other variables
-you can override.
+3. In `_config.yml` add these lines:
 
-You can see the full set of partials you can replace in the
-[`_includes`](_includes) folder, but there are a few worth noting:
+```yaml
+theme:      tale
 
-* `_includes/copyright.html` - Insert your own copyright here.
+permalink:  /:year-:month-:day/:title
+paginate:   5
+```
 
-* `_includes/custom-head.html` - Insert custom head tags (e.g. to load your
-  own stylesheets)
+Remove any other `theme:` lines.
 
-* `_includes/custom-foot.html` - Insert custom elements at the end of the
-  body (e.g. for custom JS)
+4. Rename `index.md` to `index.html`. Without this, the `jekyll-paginate` gem will not work.
 
-* `_includes/custom-nav-links.html` - Additional nav links to insert at the
-  end of the list of links in the sidebar.
+5. In `about.md`, change the `layout:` field to `post`:
 
-  Pro-tip: The `nav`s in the sidebar are flexboxes. Use the `order` property
-  to order your links.
+```Markdown
+layout: post
+```
 
-* `_includes/custom-icon-links.html`- Additional icon links to insert at the
-  end of the icon links at the bottom of the sidebar. You can use the `order`
-  property to re-order.
+### GitHub Pages method
+1. Add these 2 lines in to your `Gemfile`:
 
-* `_includes/favicons.html` - Replace references to `favicon.ico` and
-  `favicon.png` with your own favicons references.
+```ruby
+gem "jekyll-remote-theme"
+gem "jekyll-paginate"
+```
 
-* `_includes/font-includes.html` - The Abril Fatface font used for the site
-  title is loaded here. If you're overriding that font in the CSS, be sure
-  to also remove the font load reference here.
+2. Install the newly added gems:
 
-### New Features
+```bash
+$ bundle
+```
 
-* Hydeout adds a new tags page (accessible in the sidebar). Just create a
-  new page with the tags layout:
+3. In `_config.yml` add these lines:
 
-  ```
-  ---
-  layout: tags
-  title: Tags
-  ---
-  ```
+```yaml
+remote_theme: chesterhow/tale
 
-* Hydeout adds a new "category" layout for dedicated category pages.
-  Category pages are automatically added to the sidebar. All other pages
-  must have `sidebar_link: true` in their front matter to show up in
-  the sidebar. To create a category page, use the `category` layout"
+permalink:    /:year-:month-:day/:title
+paginate:     5
 
-  ```
-  ---
-  layout: category
-  title: My Category
-  ---
+plugins:
+  - jekyll-paginate
+  - jekyll-remote-theme
+```
 
-  Description of "My Category"
-  ```
+Remove any other `theme:` or `remote_theme:` lines.
 
-* You can control how pages are sorted by using the `sidebar_sort_order`
-  parameter in the front matter. This works for both category and non-category
-  pages, although non-category pages will always come first. Take a look at
-  [`_includes/sidebar-nav-links.html`](./_includes/sidebar-nav-links.html) if
-  you want to customize this behavior.
+4. Rename `index.md` to `index.html`. Without this, the `jekyll-paginate` gem will not work.
 
-  ```
-  ---
-  layout: page
-  title: My page
-  sidebar_sort_order: 123
-  ---
+5. In `about.md`, change the `layout:` field to `post`:
 
-  Some content.
-  ```
+```Markdown
+layout: post
+```
 
-* A simple redirect-to-Google search is available. Just create a page with
-  the `search` layout.
+### Fork method
+1. Fork this repository
 
-  ```
-  ---
-  layout: search
-  title: Google Search
-  ---
-  ```
+2. Delete the unnecessary files/folders: `CODE_OF_CONDUCT.md`, `LICENSE`, `README.md`, `tale.gemspec`
 
-* Disqus integration is ready out of the box. Just add the following to
-  your config file:
+3. Delete the `baseurl` line in `_config.yml`:
 
-  ```yaml
-  disqus:
-    shortname: my-disqus-shortname
-  ```
+```yaml
+baseurl:  "/tale"   # delete this line
+```
 
-  If you don't want Disqus or want to use something else, override
-  `comments.html`.
+## Usage
+Once you've installed the theme, you're ready to work on your Jekyll site. To start off, I would recommend updating `_config.yml` with your site's details.
 
-* For Google Analytics support, define a `google_analytics` variable with
-  your property ID in your config file.
+To build and serve your site, run:
 
-There's also a bunch of minor tweaks and adjustments throughout the
-theme. Hope this works for you!
+```bash
+$ bundle exec jekyll serve
+```
+
+And you're all set! Head over to http://127.0.0.1:4000/ to see your site in action.
+
+## Contributing
+Found a bug or have a suggestion? Feel free to create an issue or make a pull request!
+
+## License
+See [LICENSE](https://github.com/chesterhow/tale/blob/master/LICENSE)
