@@ -18,6 +18,8 @@ url:
 baseurl:
 permalink: pretty
 
+remote_theme: fongandrew/hydeout
+
 # Pagination
 paginate: 10
 #paginate_path: "/page:num/"
