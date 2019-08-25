@@ -1,119 +1,98 @@
-# Tale
+# Hydrogen
+轻盈、干净
 
-[![Gem Version](https://badge.fury.io/rb/tale.svg)](https://badge.fury.io/rb/tale)
+跟随她的脚步，开始你的博客之旅
 
-Tale is a minimal Jekyll theme curated for storytellers. Checkout the demo [here](https://chesterhow.github.io/tale/).
+![hydrogen](/theme/logo-h.svg)
 
-![Tale screenshot](http://i.imgur.com/pXZrtmo.png)
+~~点点~~Star~~来一个好吗！秋梨膏！！~~
 
-## Features
-- Easy installation
-- Compatible with GitHub Pages
-- Responsive design (looks just as good on mobile)
-- Syntax highlighting, with the help of Pygments
-- Markdown and HTML text formatting
-- Pagination of posts
+# #快速开始
 
-## Installation
-There are 3 ways to install this theme
+![hydrogen](/theme/a-h.png)
 
-1. Install it as a Ruby Gem (for self-hosted sites)
-2. Install it with the `jekyll-remote-theme` plugin (for GitHub Pages hosted sites)
-3. Fork the project directly
+## #准备
 
-### Ruby Gem method
-1. Add this line to your `Gemfile`:
+打开主题根目录下的`_config.yml`
 
-```ruby
-gem "tale"
+根据需求修改以下选项：
+
+`title` : 更改你的博客名字
+
+`description` : 更改你的博客描述
+
+`keywords` : 博客关键词(SEO相关)
+
+`baseurl` : 博客所在的目录文件夹，开头需带上`/`，如果为根目录请留空(建议将博客放置在根目录)
+
+`url` : 你的域名，如`atlinker.cn`无需加`http/https://`
+
+`bulidtime` : 博客建立时的时间戳，填写后将自动计算博客建立时间并显示在页脚. [日期转时间戳](https://tool.lu/timestamp/)
+
+`paginate` : 主页中显示的最大文章数，超过设定的数值文章自动归入下一页
+
+`background` : 博客首页主题图片路径
+
+`theme_color` : 博客顶部栏颜色，填颜色代码**但不要带上#号**
+
+`MathJax` : 是否开启MathJax(布尔值)
+
+`author` : 作者名
+
+> 开发者选项
+>> `PJAX` : PJAX无刷新加载(布尔值)
+
+## #设置域名
+
+修改根目录下的CNAME文件为你的域名即可
+
+#### 关于主题的基本设置已经完毕~
+
+---
+
+## #友链添加
+
+打开`_data`目录下的`friends.yml`文件，根据文件中模板新添代码即可
+
+---
+
+## #文章置顶
+
+在文章Front Matter添加stickie: true即可
+
+如：
+
+```
+ ---
+ layout: post
+ title: Hi
+ stickie: true
+ ---
 ```
 
-2. Install the theme's gems and dependencies:
+## #评论
 
-```bash
-$ bundle
-```
+#### #前提
 
-3. In `_config.yml` add these lines:
+> 必须确定已阅读[Valine](https://valine.js.org/quickstart.html)文档
 
-```yaml
-theme:      tale
+配置文件:
 
-permalink:  /:year-:month-:day/:title
-paginate:   5
-```
+`_data/social.yml` : 填写app id和key以及评论的相关信息
 
-Remove any other `theme:` lines.
+`_includes/comments.html` : 评论设置
 
-4. Rename `index.md` to `index.html`. Without this, the `jekyll-paginate` gem will not work.
+确保配置无误后修改`_data/social.yml`中的`enable`值由`false`改为`ture`即可
 
-5. In `about.md`, change the `layout:` field to `post`:
+## #写在最后
 
-```Markdown
-layout: post
-```
+请花10分钟时间**认真**阅读文档，如还有疑难之处，请提[issues](https://github.com/link9596/hydrogen/issues/new)，我会尽力帮忙
 
-### GitHub Pages method
-1. Add these 2 lines in to your `Gemfile`:
+如使用过程有任何疑难Bug，也请提出[issues](https://github.com/link9596/hydrogen/issues/new)！ :+1:
 
-```ruby
-gem "jekyll-remote-theme"
-gem "jekyll-paginate"
-```
+最后，如果喜欢~请给项目点个star:wink:(点star的dalao都超级靓的)
 
-2. Install the newly added gems:
+![hydrogen](/theme/author.svg)
 
-```bash
-$ bundle
-```
-
-3. In `_config.yml` add these lines:
-
-```yaml
-remote_theme: chesterhow/tale
-
-permalink:    /:year-:month-:day/:title
-paginate:     5
-
-plugins:
-  - jekyll-paginate
-  - jekyll-remote-theme
-```
-
-Remove any other `theme:` or `remote_theme:` lines.
-
-4. Rename `index.md` to `index.html`. Without this, the `jekyll-paginate` gem will not work.
-
-5. In `about.md`, change the `layout:` field to `post`:
-
-```Markdown
-layout: post
-```
-
-### Fork method
-1. Fork this repository
-
-2. Delete the unnecessary files/folders: `CODE_OF_CONDUCT.md`, `LICENSE`, `README.md`, `tale.gemspec`
-
-3. Delete the `baseurl` line in `_config.yml`:
-
-```yaml
-baseurl:  "/tale"   # delete this line
-```
-
-## Usage
-Once you've installed the theme, you're ready to work on your Jekyll site. To start off, I would recommend updating `_config.yml` with your site's details.
-
-To build and serve your site, run:
-
-```bash
-$ bundle exec jekyll serve
-```
-
-And you're all set! Head over to http://127.0.0.1:4000/ to see your site in action.
-
-## Contributing
-Found a bug or have a suggestion? Feel free to create an issue or make a pull request!
-
-## License
-See [LICENSE](https://github.com/chesterhow/tale/blob/master/LICENSE)
+![](https://img.shields.io/github/repo-size/link9596/hydrogen?color=%23F8BBD0)
+![](https://img.shields.io/github/release/link9596/hydrogen?color=%235C6BC0&label=Version)
