@@ -5,7 +5,7 @@ header-img: img/home-bg.jpg
 email: yunwang0911@outlook.com
 description: "Let's do it."
 keyword: "Java,Docker,Kubernetes,Life"
-url: "https://cmyun.me"              # your host, for absolute URL
+url: "https://yunwang.github.io"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Publish posts or collection documents with a future date.
