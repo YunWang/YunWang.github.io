@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>几种网络设备介绍 – Cmyun – 能力的提升靠一天天的积累</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  1. 概述
+  2. 中继器——信号增强器
+  3. 集线器——多端口中继器
+  4. 网桥——局域网连接的桥梁
+  5. 交换机——硬件版的网桥
+  6. 路由器——具有选择路径的功能
+  7. 网关——网间连接器、协议转换器
+
+1. 概述
+
+网关——传输层和应用层
+
+路由器——网络层
+
+网桥和交换机——数据链路层
+
+中继器和集线器——物理层
+
+2. 中继器——信号增强器
+
+
+  
+    在两个网络节点之间，起到增强信号，延长网络线路的作用
+  
+  中继器是模拟设备，用于连接两根电缆段。中继器不认识帧、分组和头的概念，只理解电压值
+  一句话总结：中继器，就是简单的信号放大器，使信号能传的更远
+
+
+3. 集线器——多端口中继器
+
+
+  集线器，就是有多个端口的中继器
+  集线器，把每个输入端口的信号放大再发到其他所有端口。
+
+
+4. 网桥——局域网连接的桥梁
+
+
+  网桥是局域网与局域网之间建立连接的桥梁
+  
+    作用是扩展网络和通信手段，在各种传输介质中转发数据信号，扩展网络的距离，同时又有选择地将现有地址的信号从一个传输介质发送到另一个传输介质，并能有效地限制两个介质系统中无关紧要的通信。
+  
+  一句话总结，网桥，将两个LAN连起来，根据MAC地址转发帧，可以看作一个“低层的路由器”
+
+
+5. 交换机——硬件版的网桥
+
+
+  工作在数据链路层，只认识MAC地址，不认识IP地址
+  具有自动寻址功能和交换功能。交换机能识别帧中的源MAC地址和目的MAC地址，因此可以在任意两个端口间建立联系，在数据帧的发送端和接收端之间建立临时的交换路径，使数据帧直接由源地址到达目的地址。
+  交换机是使用硬件来完成网桥用软件完成的过滤、学习和转发功能。
+  一句话总结，交换机是高级的网桥，他有网桥的功能，且性能比网桥强。两种的区别是，交换机常常用来连接独立的计算机，而网桥连接的目标是LAN，所以交换机比网桥端口多。
+
+
+6. 路由器——具有选择路径的功能
+
+
+  工作在网络层上，可以识别IP地址
+  具有判断网络地址、选择路径、过来和分隔网络信息流的功能。
+  一方面能够跨越不同的物理网络类型（DDN、FDDI、以太网等等），另一方面在逻辑上将整个互连网络分割成逻辑上独立的网络单位，使网络具有一定的逻辑结构。
+  一句话总结，路由器为经过的每个IP数据包选择一条最佳传输路径，并将数据有效的传输到目的节点。
+
+
+7. 网关——网间连接器、协议转换器
+
+
+  最复杂的网络互连设备。
+  既可以用于广域网互连，也可以用于局域网互连
+  
+    与网桥只是简单地传达信息不同，网关对收到的信息要重新打包，以适应目的系统的需求。
+  
+  一句话总结，网关，通过字面意思解释就是网络的关口。从技术角度来解释，就是连接两个不同网络的接口，比如局域网的共享上网服务器就是局域网和广域网的接口。
+
+" />
+    <meta property="og:description" content="
+  1. 概述
+  2. 中继器——信号增强器
+  3. 集线器——多端口中继器
+  4. 网桥——局域网连接的桥梁
+  5. 交换机——硬件版的网桥
+  6. 路由器——具有选择路径的功能
+  7. 网关——网间连接器、协议转换器
+
+1. 概述
+
+网关——传输层和应用层
+
+路由器——网络层
+
+网桥和交换机——数据链路层
+
+中继器和集线器——物理层
+
+2. 中继器——信号增强器
+
+
+  
+    在两个网络节点之间，起到增强信号，延长网络线路的作用
+  
+  中继器是模拟设备，用于连接两根电缆段。中继器不认识帧、分组和头的概念，只理解电压值
+  一句话总结：中继器，就是简单的信号放大器，使信号能传的更远
+
+
+3. 集线器——多端口中继器
+
+
+  集线器，就是有多个端口的中继器
+  集线器，把每个输入端口的信号放大再发到其他所有端口。
+
+
+4. 网桥——局域网连接的桥梁
+
+
+  网桥是局域网与局域网之间建立连接的桥梁
+  
+    作用是扩展网络和通信手段，在各种传输介质中转发数据信号，扩展网络的距离，同时又有选择地将现有地址的信号从一个传输介质发送到另一个传输介质，并能有效地限制两个介质系统中无关紧要的通信。
+  
+  一句话总结，网桥，将两个LAN连起来，根据MAC地址转发帧，可以看作一个“低层的路由器”
+
+
+5. 交换机——硬件版的网桥
+
+
+  工作在数据链路层，只认识MAC地址，不认识IP地址
+  具有自动寻址功能和交换功能。交换机能识别帧中的源MAC地址和目的MAC地址，因此可以在任意两个端口间建立联系，在数据帧的发送端和接收端之间建立临时的交换路径，使数据帧直接由源地址到达目的地址。
+  交换机是使用硬件来完成网桥用软件完成的过滤、学习和转发功能。
+  一句话总结，交换机是高级的网桥，他有网桥的功能，且性能比网桥强。两种的区别是，交换机常常用来连接独立的计算机，而网桥连接的目标是LAN，所以交换机比网桥端口多。
+
+
+6. 路由器——具有选择路径的功能
+
+
+  工作在网络层上，可以识别IP地址
+  具有判断网络地址、选择路径、过来和分隔网络信息流的功能。
+  一方面能够跨越不同的物理网络类型（DDN、FDDI、以太网等等），另一方面在逻辑上将整个互连网络分割成逻辑上独立的网络单位，使网络具有一定的逻辑结构。
+  一句话总结，路由器为经过的每个IP数据包选择一条最佳传输路径，并将数据有效的传输到目的节点。
+
+
+7. 网关——网间连接器、协议转换器
+
+
+  最复杂的网络互连设备。
+  既可以用于广域网互连，也可以用于局域网互连
+  
+    与网桥只是简单地传达信息不同，网关对收到的信息要重新打包，以适应目的系统的需求。
+  
+  一句话总结，网关，通过字面意思解释就是网络的关口。从技术角度来解释，就是连接两个不同网络的接口，比如局域网的共享上网服务器就是局域网和广域网的接口。
+
+" />
+    
+    <meta name="author" content="Cmyun" />
+
+    
+    <meta property="og:title" content="几种网络设备介绍" />
+    <meta property="twitter:title" content="几种网络设备介绍" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/cmyun/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Cmyun - 能力的提升靠一天天的积累" href="/cmyun/feed.xml" />
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/FromEndWorld/LOFFER/master/images/favicon.png">
+  <script src="https://kit.fontawesome.com/56f7faf3f4.js"></script>
+
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+
+</head>
+  <body>
+    <div class="wrapper-sidebar">
+  <header class="sidebar clearfix">
+    <div class="site-info">
+      
+        <a href="/cmyun/" class="site-avatar"><img src="https://raw.githubusercontent.com/FromEndWorld/LOFFER/master/images/logo.png" /></a>
+       
+      <h1 class="site-name"><a href="/cmyun/">Cmyun</a></h1>
+      <p class="site-description">能力的提升靠一天天的积累</p>
+    </div>
+  </header>
+
+  <div class="navlist">
+    <nav>
+      
+      
+      <a href="/cmyun/">首页</a>
+      
+      
+      
+      <a href="/cmyun/about">关于</a>
+      
+      
+      
+      <a href="/cmyun/archive">归档</a>
+      
+      
+      
+      <a href="/cmyun/tags">标签</a>
+      
+      
+    </nav>
+  </div>
+
+  <div class="wrapper-footer-desktop">
+    <footer class="footer">
+      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+  
+  
+
+  
+
+  
+  <li><a href="mailto:yunwang0911@outlook.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>Copyright (c) 2019 来自中世界</p>
+
+    </footer>
+  </div>
+</div>
+
+    <div id="main" role="main" class="wrapper-content">
+      <article class="posts">
+  <h1>几种网络设备介绍</h1>
+
+  <div clsss="meta">
+    <span class="date">
+      2019-08-26
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/cmyun/tags#Network">
+          Network
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+   
+  <div class="entry">
+    <ul id="markdown-toc">
+  <li><a href="#1-概述" id="markdown-toc-1-概述">1. 概述</a></li>
+  <li><a href="#2-中继器信号增强器" id="markdown-toc-2-中继器信号增强器">2. 中继器——信号增强器</a></li>
+  <li><a href="#3-集线器多端口中继器" id="markdown-toc-3-集线器多端口中继器">3. 集线器——多端口中继器</a></li>
+  <li><a href="#4-网桥局域网连接的桥梁" id="markdown-toc-4-网桥局域网连接的桥梁">4. 网桥——局域网连接的桥梁</a></li>
+  <li><a href="#5-交换机硬件版的网桥" id="markdown-toc-5-交换机硬件版的网桥">5. 交换机——硬件版的网桥</a></li>
+  <li><a href="#6-路由器具有选择路径的功能" id="markdown-toc-6-路由器具有选择路径的功能">6. 路由器——具有选择路径的功能</a></li>
+  <li><a href="#7-网关网间连接器协议转换器" id="markdown-toc-7-网关网间连接器协议转换器">7. 网关——网间连接器、协议转换器</a></li>
+</ul>
+<h2 id="1-概述">1. 概述</h2>
+
+<p>网关——传输层和应用层</p>
+
+<p>路由器——网络层</p>
+
+<p>网桥和交换机——数据链路层</p>
+
+<p>中继器和集线器——物理层</p>
+
+<h2 id="2-中继器信号增强器">2. 中继器——信号增强器</h2>
+
+<ol>
+  <li>
+    <p>在两个网络节点之间，起到增强信号，延长网络线路的作用</p>
+  </li>
+  <li>中继器是模拟设备，用于连接两根电缆段。中继器不认识帧、分组和头的概念，只理解电压值</li>
+  <li>一句话总结：中继器，就是简单的信号放大器，使信号能传的更远</li>
+</ol>
+
+<h2 id="3-集线器多端口中继器">3. 集线器——多端口中继器</h2>
+
+<ol>
+  <li>集线器，就是有多个端口的中继器</li>
+  <li>集线器，把每个输入端口的信号放大再发到其他所有端口。</li>
+</ol>
+
+<h2 id="4-网桥局域网连接的桥梁">4. 网桥——局域网连接的桥梁</h2>
+
+<ol>
+  <li>网桥是局域网与局域网之间建立连接的桥梁</li>
+  <li>
+    <p>作用是<strong>扩展网络和通信手段</strong>，在各种传输介质中转发数据信号，扩展网络的距离，同时又有选择地将现有地址的信号从一个传输介质发送到另一个传输介质，并能有效地限制两个介质系统中无关紧要的通信。</p>
+  </li>
+  <li>一句话总结，网桥，将两个LAN连起来，根据MAC地址转发帧，可以看作一个“低层的路由器”</li>
+</ol>
+
+<h2 id="5-交换机硬件版的网桥">5. 交换机——硬件版的网桥</h2>
+
+<ol>
+  <li>工作在数据链路层，只认识MAC地址，不认识IP地址</li>
+  <li>具有自动寻址功能和交换功能。交换机能识别帧中的源MAC地址和目的MAC地址，因此可以在任意两个端口间建立联系，在数据帧的发送端和接收端之间建立临时的交换路径，使数据帧直接由源地址到达目的地址。</li>
+  <li>交换机是使用硬件来完成网桥用软件完成的过滤、学习和转发功能。</li>
+  <li>一句话总结，交换机是高级的网桥，他有网桥的功能，且性能比网桥强。两种的区别是，交换机常常用来连接独立的计算机，而网桥连接的目标是LAN，所以交换机比网桥端口多。</li>
+</ol>
+
+<h2 id="6-路由器具有选择路径的功能">6. 路由器——具有选择路径的功能</h2>
+
+<ol>
+  <li>工作在网络层上，可以识别IP地址</li>
+  <li>具有判断网络地址、选择路径、过来和分隔网络信息流的功能。</li>
+  <li>一方面能够跨越不同的物理网络类型（DDN、FDDI、以太网等等），另一方面在逻辑上将整个互连网络分割成逻辑上独立的网络单位，使网络具有一定的逻辑结构。</li>
+  <li>一句话总结，路由器为经过的每个IP数据包选择一条最佳传输路径，并将数据有效的传输到目的节点。</li>
+</ol>
+
+<h2 id="7-网关网间连接器协议转换器">7. 网关——网间连接器、协议转换器</h2>
+
+<ol>
+  <li>最复杂的网络互连设备。</li>
+  <li>既可以用于广域网互连，也可以用于局域网互连</li>
+  <li>
+    <p>与网桥只是简单地传达信息不同，网关对收到的信息要重新打包，以适应目的系统的需求。</p>
+  </li>
+  <li>一句话总结，网关，通过字面意思解释就是网络的关口。从技术角度来解释，就是连接两个不同网络的接口，比如局域网的共享上网服务器就是局域网和广域网的接口。</li>
+</ol>
+
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'loffer';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+<div class="pagination">
+  
+    <span class="prev" >
+      <a href="http://localhost:4000/cmyun/tr/">
+        ← 上一篇
+      </a>
+    </span>
+  
+  
+    <span class="next" >
+      <a href="http://localhost:4000/cmyun/%E7%B1%BB%E4%B8%AD%E5%AE%9A%E4%B9%89%E8%87%AA%E8%BA%AB%E5%AE%9E%E4%BE%8B/">
+        下一篇 →
+      </a>
+    </span>
+  
+</div>
+    </div>
+
+    
+
+  </body>
+
+  <div class="wrapper-footer-mobile">
+    <footer class="footer">
+      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+  
+  
+
+  
+
+  
+  <li><a href="mailto:yunwang0911@outlook.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>Copyright (c) 2019 来自中世界</p>
+
+    </footer>
+
+
+</html>

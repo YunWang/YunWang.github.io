@@ -1,0 +1,94 @@
+I"�'<ul id="markdown-toc">
+  <li><a href="#1-自身类的成员变量只能被定义为static的否则会造成溢出" id="markdown-toc-1-自身类的成员变量只能被定义为static的否则会造成溢出">1. 自身类的成员变量只能被定义为static的，否则会造成溢出</a></li>
+  <li><a href="#2-原理" id="markdown-toc-2-原理">2. 原理</a></li>
+  <li><a href="#3-源码引用" id="markdown-toc-3-源码引用">3. 源码引用</a></li>
+</ul>
+<h2 id="1-自身类的成员变量只能被定义为static的否则会造成溢出">1. 自身类的成员变量只能被定义为static的，否则会造成溢出</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">String</span> <span class="n">username</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">User</span><span class="o">();</span>
+    <span class="c1">//private static User user = new User();</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getUsername</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">username</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUsername</span><span class="o">(</span><span class="nc">String</span> <span class="n">username</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">username</span> <span class="o">=</span> <span class="n">username</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">User</span><span class="o">();</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"cmyun"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getUsername</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>如上，在User中定义自身的对象，结果如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Exception</span> <span class="n">in</span> <span class="n">thread</span> <span class="s">"main"</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">StackOverflowError</span>
+	<span class="n">at</span> <span class="nc">User</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">)</span>
+	<span class="n">at</span> <span class="nc">User</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">)</span>
+	<span class="n">at</span> <span class="nc">User</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">)</span>
+	<span class="n">at</span> <span class="nc">User</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">)</span>
+	<span class="n">at</span> <span class="nc">User</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">)</span>
+	<span class="n">at</span> <span class="nc">User</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">)</span>
+	<span class="n">at</span> <span class="nc">User</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">)</span>
+	<span class="n">at</span> <span class="nc">User</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">)</span>
+	<span class="n">at</span> <span class="nc">User</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">User</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>当在user前加上static时，就可以正常运行：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cmyun</span>
+
+<span class="nc">Process</span> <span class="n">finished</span> <span class="n">with</span> <span class="n">exit</span> <span class="n">code</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<h2 id="2-原理">2. 原理</h2>
+
+<p>我们知道类的static属性，是类级别的，不是实例级别的。所以在类第一次初始化的时候，static属性会被初始化，并被保存到静态区，之后再new实例的时候，static属性不会再被初始化，而是共享第一次创建的。</p>
+
+<p>所以，如果不是static的，则User会无限循环的创建自己。但是，当加上static后，只在第一次创建一个static的自己，之后就会直接引用静态区的User对象，而不会再创建。</p>
+
+<h2 id="3-源码引用">3. 源码引用</h2>
+
+<p>在AbstractQueueSynchronizer抽象类中，定义了一个静态内部类Node，每个Node有两种模式，分别是Shared和Exclusive，实际上Shared和Exclusive都是Node类型的。源码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">static</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+        <span class="cm">/** Marker to indicate a node is waiting in shared mode */</span>
+        <span class="kd">static</span> <span class="kd">final</span> <span class="nc">Node</span> <span class="no">SHARED</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Node</span><span class="o">();</span>
+        <span class="cm">/** Marker to indicate a node is waiting in exclusive mode */</span>
+        <span class="kd">static</span> <span class="kd">final</span> <span class="nc">Node</span> <span class="no">EXCLUSIVE</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="cm">/**
+         * Link to next node waiting on condition, or the special
+         * value SHARED.  Because condition queues are accessed only
+         * when holding in exclusive mode, we just need a simple
+         * linked queue to hold nodes while they are waiting on
+         * conditions. They are then transferred to the queue to
+         * re-acquire. And because conditions can only be exclusive,
+         * we save a field by using special value to indicate shared
+         * mode.
+         */</span>
+        <span class="nc">Node</span> <span class="n">nextWaiter</span><span class="o">;</span>
+
+        <span class="cm">/**
+         * Returns true if node is waiting in shared mode.
+         */</span>
+        <span class="kd">final</span> <span class="kt">boolean</span> <span class="nf">isShared</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">nextWaiter</span> <span class="o">==</span> <span class="no">SHARED</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="nc">Node</span><span class="o">(</span><span class="nc">Thread</span> <span class="n">thread</span><span class="o">,</span> <span class="nc">Node</span> <span class="n">mode</span><span class="o">)</span> <span class="o">{</span>     <span class="c1">// Used by addWaiter</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">nextWaiter</span> <span class="o">=</span> <span class="n">mode</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">thread</span> <span class="o">=</span> <span class="n">thread</span><span class="o">;</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>如上，SHARED和EXCLUSIVE都是static Node类型的。通过构造器在创建Node的时候指定mode，将Node的模式存到nextWaiter中，所以判断Node是shared或Exclusive模式，就可以通过nextWaiter的值来判断</p>
+
+:ET

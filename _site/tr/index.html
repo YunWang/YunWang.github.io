@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>tr命令 – Cmyun – 能力的提升靠一天天的积累</title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  1. 概述
+  2. 语法
+  3. Options
+  4. 字符集SET
+  5. 实例    
+      5.1 将文件中出现的”abc“替换为”xyz“
+      5.2 统一字母大小写
+      5.3 将文件中的[0-9]替换为[a-j]
+      5.4 删除文件中出现的“Snail”字符
+      5.5 删除文件中出现的换行和制表
+      5.6 删除连续重复字符
+      5.7 删除空行
+      5.8 把路径变量中的冒号“：”替换成换行符“\n”
+      5.9 创建一个文件中所有单词的列表
+      5.10 列转行
+      5.11 杀死所有包含key的进程
+    
+  
+
+1. 概述
+
+
+  用一个字符替换另一个字符
+  去除字符
+  出去重复
+
+
+2. 语法
+
+tr [OPTION]... SET1 [SET2]
+
+
+3. Options
+
+
+  -c,-C,–complement:用SET1中的字符替换SET2中的字符，一一对应
+
+  -d,–delete:删除SET1中的字符
+
+  -s,–squeeze-repeats:删除所有连续重复出现的字符，只保留第一个字符；即将连续重复出现的字符压缩为一个字符。
+
+  -t，–truncate-set1:先将SET1的长度截为与set2相同，再做替换
+
+
+4. 字符集SET
+
+可以是单字符或者字符串范围或列表
+
+[a-z]
+
+[A-Z]
+
+[0-9]
+
+[A*n]
+
+
+  
+    C1-C2:tr “a-z” “A-Z” &lt; test
+  
+  
+    [C*Number]:Number* 是一个整数，它指定了由 C 所指定的字符的重复次数。除非其首位数字是 0，否则 Number 一律视为是十进制整数；如果首位数字是 0，那么视为八进制整数
+  
+  
+    [C*]:用 C 指定的字符填写字符串。该选项只用于包含在 String2 中的字符串末尾，它强制 String2 中的字符串具有与由 String1 变量所指定的字符串一样的字符数。*（星号）后面指定的任何字符都被忽略。
+  
+  
+    [:ClassName:]:指定由当前语言环境中的 ClassName 所命名的字符类中的所有字符。
+
+    alnum所有的字母和数字
+alpha所有字母
+upper大写字母
+lower小写字母
+digit数字 
+   
+print所有的打印字符，包括空格
+graph所有的可打印字符，不包括空格
+blank所有呈水平排列的空白字符
+space所有呈水平或垂直排列的空白字符
+   
+punct所有的标点符号
+cntrl控制字符
+xdigit所有的十六进制数
+    
+
+    除 [:lower:] 和 [:upper:] 转换字符类之外，其他字符类指定的字符都按未指定的顺序放入数组中。由于未定义字符类指定的字符的顺序，仅当目的为将多个字符映射为一个时才使用这些字符。转换字符类除外。
+  
+  
+    [=C=]:指定所有的字符具有与 C 所指定的字符相同的等价类。
+  
+  
+    \Octal:指定字符，其编码由 Octal 所指定的八进制值表示。Octal 可以是 1 位、2 位 或 3 位八进制整数。空字符可以用 ‘\0’ 表示，并可以像任何其他的字符那样进行处理。
+  
+  
+    \ControlCharacter:指定与 ControlCharacter 所指定的值相应的控制字符。
+
+    \a警告
+\b退格键
+\f换页
+\n换行
+\r回车
+\t制表键
+\v垂直制表键
+    
+  
+  
+    \\,\[,\-:反斜杠、左括号、负号
+  
+
+
+5. 实例
+
+5.1 将文件中出现的”abc“替换为”xyz“
+
+cat file | tr "abc" "xyz" &gt; new_file
+#这里不是讲字符串”abc“替换成"xyz"，而是将所有的“a”替换为“x”，“b”替换为“y”，“c”替换为“z”
+
+
+5.2 统一字母大小写
+
+cat file | tr [a-z] [A-Z] &gt; new_file
+cat file | tr [A-Z] [a-z] &gt; new_file
+
+
+5.3 将文件中的[0-9]替换为[a-j]
+
+cat file | tr [0-9] [a-j] &gt; new_file
+
+
+5.4 删除文件中出现的“Snail”字符
+
+cat file | tr -d "Snail" &gt; new_file
+#注意这里不是删除字符串“Snail”,而是删除所有的'S','n','a','i','l'
+
+
+5.5 删除文件中出现的换行和制表
+
+cat file | tr -d "\n\t"
+
+
+5.6 删除连续重复字符
+
+cat file | tr -s [a-zA-Z]
+
+
+5.7 删除空行
+
+cat file | tr -s "\n"
+
+
+5.8 把路径变量中的冒号“：”替换成换行符“\n”
+
+echo $PATH | tr -s ":" "\n"
+
+
+5.9 创建一个文件中所有单词的列表
+
+tr -cs "\[:lower:]\[:upper:]" "\[\\n\*]" &lt; test
+
+
+5.10 列转行
+
+tr "\n" " "
+
+
+5.11 杀死所有包含key的进程
+
+kill -9 `ps aux | grep {key} | awk '{print $2}' | tr "\n" " "`
+
+
+" />
+    <meta property="og:description" content="
+  1. 概述
+  2. 语法
+  3. Options
+  4. 字符集SET
+  5. 实例    
+      5.1 将文件中出现的”abc“替换为”xyz“
+      5.2 统一字母大小写
+      5.3 将文件中的[0-9]替换为[a-j]
+      5.4 删除文件中出现的“Snail”字符
+      5.5 删除文件中出现的换行和制表
+      5.6 删除连续重复字符
+      5.7 删除空行
+      5.8 把路径变量中的冒号“：”替换成换行符“\n”
+      5.9 创建一个文件中所有单词的列表
+      5.10 列转行
+      5.11 杀死所有包含key的进程
+    
+  
+
+1. 概述
+
+
+  用一个字符替换另一个字符
+  去除字符
+  出去重复
+
+
+2. 语法
+
+tr [OPTION]... SET1 [SET2]
+
+
+3. Options
+
+
+  -c,-C,–complement:用SET1中的字符替换SET2中的字符，一一对应
+
+  -d,–delete:删除SET1中的字符
+
+  -s,–squeeze-repeats:删除所有连续重复出现的字符，只保留第一个字符；即将连续重复出现的字符压缩为一个字符。
+
+  -t，–truncate-set1:先将SET1的长度截为与set2相同，再做替换
+
+
+4. 字符集SET
+
+可以是单字符或者字符串范围或列表
+
+[a-z]
+
+[A-Z]
+
+[0-9]
+
+[A*n]
+
+
+  
+    C1-C2:tr “a-z” “A-Z” &lt; test
+  
+  
+    [C*Number]:Number* 是一个整数，它指定了由 C 所指定的字符的重复次数。除非其首位数字是 0，否则 Number 一律视为是十进制整数；如果首位数字是 0，那么视为八进制整数
+  
+  
+    [C*]:用 C 指定的字符填写字符串。该选项只用于包含在 String2 中的字符串末尾，它强制 String2 中的字符串具有与由 String1 变量所指定的字符串一样的字符数。*（星号）后面指定的任何字符都被忽略。
+  
+  
+    [:ClassName:]:指定由当前语言环境中的 ClassName 所命名的字符类中的所有字符。
+
+    alnum所有的字母和数字
+alpha所有字母
+upper大写字母
+lower小写字母
+digit数字 
+   
+print所有的打印字符，包括空格
+graph所有的可打印字符，不包括空格
+blank所有呈水平排列的空白字符
+space所有呈水平或垂直排列的空白字符
+   
+punct所有的标点符号
+cntrl控制字符
+xdigit所有的十六进制数
+    
+
+    除 [:lower:] 和 [:upper:] 转换字符类之外，其他字符类指定的字符都按未指定的顺序放入数组中。由于未定义字符类指定的字符的顺序，仅当目的为将多个字符映射为一个时才使用这些字符。转换字符类除外。
+  
+  
+    [=C=]:指定所有的字符具有与 C 所指定的字符相同的等价类。
+  
+  
+    \Octal:指定字符，其编码由 Octal 所指定的八进制值表示。Octal 可以是 1 位、2 位 或 3 位八进制整数。空字符可以用 ‘\0’ 表示，并可以像任何其他的字符那样进行处理。
+  
+  
+    \ControlCharacter:指定与 ControlCharacter 所指定的值相应的控制字符。
+
+    \a警告
+\b退格键
+\f换页
+\n换行
+\r回车
+\t制表键
+\v垂直制表键
+    
+  
+  
+    \\,\[,\-:反斜杠、左括号、负号
+  
+
+
+5. 实例
+
+5.1 将文件中出现的”abc“替换为”xyz“
+
+cat file | tr "abc" "xyz" &gt; new_file
+#这里不是讲字符串”abc“替换成"xyz"，而是将所有的“a”替换为“x”，“b”替换为“y”，“c”替换为“z”
+
+
+5.2 统一字母大小写
+
+cat file | tr [a-z] [A-Z] &gt; new_file
+cat file | tr [A-Z] [a-z] &gt; new_file
+
+
+5.3 将文件中的[0-9]替换为[a-j]
+
+cat file | tr [0-9] [a-j] &gt; new_file
+
+
+5.4 删除文件中出现的“Snail”字符
+
+cat file | tr -d "Snail" &gt; new_file
+#注意这里不是删除字符串“Snail”,而是删除所有的'S','n','a','i','l'
+
+
+5.5 删除文件中出现的换行和制表
+
+cat file | tr -d "\n\t"
+
+
+5.6 删除连续重复字符
+
+cat file | tr -s [a-zA-Z]
+
+
+5.7 删除空行
+
+cat file | tr -s "\n"
+
+
+5.8 把路径变量中的冒号“：”替换成换行符“\n”
+
+echo $PATH | tr -s ":" "\n"
+
+
+5.9 创建一个文件中所有单词的列表
+
+tr -cs "\[:lower:]\[:upper:]" "\[\\n\*]" &lt; test
+
+
+5.10 列转行
+
+tr "\n" " "
+
+
+5.11 杀死所有包含key的进程
+
+kill -9 `ps aux | grep {key} | awk '{print $2}' | tr "\n" " "`
+
+
+" />
+    
+    <meta name="author" content="Cmyun" />
+
+    
+    <meta property="og:title" content="tr命令" />
+    <meta property="twitter:title" content="tr命令" />
+    
+  <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/cmyun/style.css" />
+  <link rel="alternate" type="application/rss+xml" title="Cmyun - 能力的提升靠一天天的积累" href="/cmyun/feed.xml" />
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/FromEndWorld/LOFFER/master/images/favicon.png">
+  <script src="https://kit.fontawesome.com/56f7faf3f4.js"></script>
+
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+
+</head>
+  <body>
+    <div class="wrapper-sidebar">
+  <header class="sidebar clearfix">
+    <div class="site-info">
+      
+        <a href="/cmyun/" class="site-avatar"><img src="https://raw.githubusercontent.com/FromEndWorld/LOFFER/master/images/logo.png" /></a>
+       
+      <h1 class="site-name"><a href="/cmyun/">Cmyun</a></h1>
+      <p class="site-description">能力的提升靠一天天的积累</p>
+    </div>
+  </header>
+
+  <div class="navlist">
+    <nav>
+      
+      
+      <a href="/cmyun/">首页</a>
+      
+      
+      
+      <a href="/cmyun/about">关于</a>
+      
+      
+      
+      <a href="/cmyun/archive">归档</a>
+      
+      
+      
+      <a href="/cmyun/tags">标签</a>
+      
+      
+    </nav>
+  </div>
+
+  <div class="wrapper-footer-desktop">
+    <footer class="footer">
+      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+  
+  
+
+  
+
+  
+  <li><a href="mailto:yunwang0911@outlook.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>Copyright (c) 2019 来自中世界</p>
+
+    </footer>
+  </div>
+</div>
+
+    <div id="main" role="main" class="wrapper-content">
+      <article class="posts">
+  <h1>tr命令</h1>
+
+  <div clsss="meta">
+    <span class="date">
+      2019-08-25
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="http://localhost:4000/cmyun/tags#shell">
+          shell
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+   
+  <div class="entry">
+    <ul id="markdown-toc">
+  <li><a href="#1-概述" id="markdown-toc-1-概述">1. 概述</a></li>
+  <li><a href="#2-语法" id="markdown-toc-2-语法">2. 语法</a></li>
+  <li><a href="#3-options" id="markdown-toc-3-options">3. Options</a></li>
+  <li><a href="#4-字符集set" id="markdown-toc-4-字符集set">4. 字符集SET</a></li>
+  <li><a href="#5-实例" id="markdown-toc-5-实例">5. 实例</a>    <ul>
+      <li><a href="#51-将文件中出现的abc替换为xyz" id="markdown-toc-51-将文件中出现的abc替换为xyz">5.1 将文件中出现的”abc“替换为”xyz“</a></li>
+      <li><a href="#52-统一字母大小写" id="markdown-toc-52-统一字母大小写">5.2 统一字母大小写</a></li>
+      <li><a href="#53-将文件中的0-9替换为a-j" id="markdown-toc-53-将文件中的0-9替换为a-j">5.3 将文件中的[0-9]替换为[a-j]</a></li>
+      <li><a href="#54-删除文件中出现的snail字符" id="markdown-toc-54-删除文件中出现的snail字符">5.4 删除文件中出现的“Snail”字符</a></li>
+      <li><a href="#55-删除文件中出现的换行和制表" id="markdown-toc-55-删除文件中出现的换行和制表">5.5 删除文件中出现的换行和制表</a></li>
+      <li><a href="#56-删除连续重复字符" id="markdown-toc-56-删除连续重复字符">5.6 删除连续重复字符</a></li>
+      <li><a href="#57-删除空行" id="markdown-toc-57-删除空行">5.7 删除空行</a></li>
+      <li><a href="#58-把路径变量中的冒号替换成换行符n" id="markdown-toc-58-把路径变量中的冒号替换成换行符n">5.8 把路径变量中的冒号“：”替换成换行符“\n”</a></li>
+      <li><a href="#59-创建一个文件中所有单词的列表" id="markdown-toc-59-创建一个文件中所有单词的列表">5.9 <em>创建一个文件中所有单词的列表</em></a></li>
+      <li><a href="#510-列转行" id="markdown-toc-510-列转行">5.10 列转行</a></li>
+      <li><a href="#511-杀死所有包含key的进程" id="markdown-toc-511-杀死所有包含key的进程">5.11 杀死所有包含key的进程</a></li>
+    </ul>
+  </li>
+</ul>
+<h2 id="1-概述">1. 概述</h2>
+
+<ol>
+  <li>用一个字符替换另一个字符</li>
+  <li>去除字符</li>
+  <li>出去重复</li>
+</ol>
+
+<h2 id="2-语法">2. 语法</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tr</span> <span class="o">[</span>OPTION]... SET1 <span class="o">[</span>SET2]
+</code></pre></div></div>
+
+<h2 id="3-options">3. Options</h2>
+
+<blockquote>
+  <p>-c,-C,–complement:用SET1中的字符替换SET2中的字符，一一对应</p>
+
+  <p>-d,–delete:删除SET1中的字符</p>
+
+  <p>-s,–squeeze-repeats:删除所有连续重复出现的字符，只保留第一个字符；即将连续重复出现的字符压缩为一个字符。</p>
+
+  <p>-t，–truncate-set1:先将SET1的长度截为与set2相同，再做替换</p>
+</blockquote>
+
+<h2 id="4-字符集set">4. 字符集SET</h2>
+
+<p>可以是单字符或者字符串范围或列表</p>
+
+<p>[a-z]</p>
+
+<p>[A-Z]</p>
+
+<p>[0-9]</p>
+
+<p>[A*n]</p>
+
+<ol>
+  <li>
+    <p>C1-C2:tr “a-z” “A-Z” &lt; test</p>
+  </li>
+  <li>
+    <p>[C*Number]:Number* 是一个整数，它指定了由 <em>C</em> 所指定的字符的重复次数。除非其首位数字是 0，否则 <em>Number</em> 一律视为是十进制整数；如果首位数字是 0，那么视为八进制整数</p>
+  </li>
+  <li>
+    <p>[C*]:用 <em>C</em> 指定的字符填写字符串。该选项只用于包含在 <em>String2</em> 中的字符串末尾，它强制 <em>String2</em> 中的字符串具有与由 <em>String1</em> 变量所指定的字符串一样的字符数。*（星号）后面指定的任何字符都被忽略。</p>
+  </li>
+  <li>
+    <p>[:ClassName:]:指定由当前语言环境中的 <em>ClassName</em> 所命名的字符类中的所有字符。</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>alnum所有的字母和数字
+alpha所有字母
+upper大写字母
+lower小写字母
+digit数字 
+   
+print所有的打印字符，包括空格
+graph所有的可打印字符，不包括空格
+blank所有呈水平排列的空白字符
+space所有呈水平或垂直排列的空白字符
+   
+punct所有的标点符号
+cntrl控制字符
+xdigit所有的十六进制数
+</code></pre></div>    </div>
+
+    <p>除 [:lower:] 和 [:upper:] 转换字符类之外，其他字符类指定的字符都按未指定的顺序放入数组中。由于未定义字符类指定的字符的顺序，仅当目的为将多个字符映射为一个时才使用这些字符。转换字符类除外。</p>
+  </li>
+  <li>
+    <p>[=C=]:指定所有的字符具有与 <em>C</em> 所指定的字符相同的等价类。</p>
+  </li>
+  <li>
+    <p>\Octal:指定字符，其编码由 <em>Octal</em> 所指定的八进制值表示。<em>Octal</em> 可以是 1 位、2 位 或 3 位八进制整数。空字符可以用 ‘\0’ 表示，并可以像任何其他的字符那样进行处理。</p>
+  </li>
+  <li>
+    <p>\ControlCharacter:指定与 <em>ControlCharacter</em> 所指定的值相应的控制字符。</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="se">\a</span>警告
+<span class="se">\b</span>退格键
+<span class="se">\f</span>换页
+<span class="se">\n</span>换行
+<span class="se">\r</span>回车
+<span class="se">\t</span>制表键
+<span class="se">\v</span>垂直制表键
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>\\,\[,\-:反斜杠、左括号、负号</p>
+  </li>
+</ol>
+
+<h2 id="5-实例">5. 实例</h2>
+
+<h3 id="51-将文件中出现的abc替换为xyz">5.1 将文件中出现的”abc“替换为”xyz“</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>file | <span class="nb">tr</span> <span class="s2">"abc"</span> <span class="s2">"xyz"</span> <span class="o">&gt;</span> new_file
+<span class="c">#这里不是讲字符串”abc“替换成"xyz"，而是将所有的“a”替换为“x”，“b”替换为“y”，“c”替换为“z”</span>
+</code></pre></div></div>
+
+<h3 id="52-统一字母大小写">5.2 统一字母大小写</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>file | <span class="nb">tr</span> <span class="o">[</span>a-z] <span class="o">[</span>A-Z] <span class="o">&gt;</span> new_file
+<span class="nb">cat </span>file | <span class="nb">tr</span> <span class="o">[</span>A-Z] <span class="o">[</span>a-z] <span class="o">&gt;</span> new_file
+</code></pre></div></div>
+
+<h3 id="53-将文件中的0-9替换为a-j">5.3 将文件中的[0-9]替换为[a-j]</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>file | <span class="nb">tr</span> <span class="o">[</span>0-9] <span class="o">[</span>a-j] <span class="o">&gt;</span> new_file
+</code></pre></div></div>
+
+<h3 id="54-删除文件中出现的snail字符">5.4 删除文件中出现的“Snail”字符</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>file | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s2">"Snail"</span> <span class="o">&gt;</span> new_file
+<span class="c">#注意这里不是删除字符串“Snail”,而是删除所有的'S','n','a','i','l'</span>
+</code></pre></div></div>
+
+<h3 id="55-删除文件中出现的换行和制表">5.5 删除文件中出现的换行和制表</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>file | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s2">"</span><span class="se">\n\t</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h3 id="56-删除连续重复字符">5.6 删除连续重复字符</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>file | <span class="nb">tr</span> <span class="nt">-s</span> <span class="o">[</span>a-zA-Z]
+</code></pre></div></div>
+
+<h3 id="57-删除空行">5.7 删除空行</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat </span>file | <span class="nb">tr</span> <span class="nt">-s</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h3 id="58-把路径变量中的冒号替换成换行符n">5.8 把路径变量中的冒号“：”替换成换行符“\n”</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$PATH</span> | <span class="nb">tr</span> <span class="nt">-s</span> <span class="s2">":"</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h3 id="59-创建一个文件中所有单词的列表">5.9 <em>创建一个文件中所有单词的列表</em></h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tr</span> <span class="nt">-cs</span> <span class="s2">"</span><span class="se">\[</span><span class="s2">:lower:]</span><span class="se">\[</span><span class="s2">:upper:]"</span> <span class="s2">"</span><span class="se">\[\\</span><span class="s2">n</span><span class="se">\*</span><span class="s2">]"</span> &lt; <span class="nb">test</span>
+</code></pre></div></div>
+
+<h3 id="510-列转行">5.10 列转行</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tr</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="s2">" "</span>
+</code></pre></div></div>
+
+<h3 id="511-杀死所有包含key的进程">5.11 杀死所有包含key的进程</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">kill</span> <span class="nt">-9</span> <span class="sb">`</span>ps aux | <span class="nb">grep</span> <span class="o">{</span>key<span class="o">}</span> | <span class="nb">awk</span> <span class="s1">'{print $2}'</span> | <span class="nb">tr</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="s2">" "</span><span class="sb">`</span>
+</code></pre></div></div>
+
+
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'loffer';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+<div class="pagination">
+  
+  
+    <span class="next" >
+      <a href="http://localhost:4000/cmyun/%E5%87%A0%E7%A7%8D%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%E4%BB%8B%E7%BB%8D/">
+        下一篇 →
+      </a>
+    </span>
+  
+</div>
+    </div>
+
+    
+
+  </body>
+
+  <div class="wrapper-footer-mobile">
+    <footer class="footer">
+      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+  
+  
+
+  
+
+  
+  <li><a href="mailto:yunwang0911@outlook.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</ul>
+
+
+
+<p>Copyright (c) 2019 来自中世界</p>
+
+    </footer>
+
+
+</html>
