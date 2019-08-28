@@ -1,157 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  <title>ThreadLocal源码解析 – Cmyun – 能力的提升靠一天天的积累</title>
-
-      <meta charset="utf-8" />
-    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
-
-    
-    <meta name="description" content="
-" />
-    <meta property="og:description" content="
-" />
-    
-    <meta name="author" content="Cmyun" />
-
-    
-    <meta property="og:title" content="ThreadLocal源码解析" />
-    <meta property="twitter:title" content="ThreadLocal源码解析" />
-    
-  <!-- Async font loading -->
-<script>
-  window.WebFontConfig = {
-      custom: {
-          families: ['Spoqa Han Sans:100,300,400,700'],
-          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
-      },
-      timeout: 60000
-  };
-  (function(d) {
-      var wf = d.createElement('script'), s = d.scripts[0];
-      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
-      s.parentNode.insertBefore(wf, s);
-  })(document);
-</script>
-
-  <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-
-  <link rel="stylesheet" type="text/css" href="/style.css" />
-  <link rel="alternate" type="application/rss+xml" title="Cmyun - 能力的提升靠一天天的积累" href="/feed.xml" />
-  <link rel="shortcut icon" href="https://raw.githubusercontent.com/FromEndWorld/LOFFER/master/images/favicon.png">
-  <script src="https://kit.fontawesome.com/56f7faf3f4.js"></script>
-
-
-  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
-
-</head>
-  <body>
-    <div class="wrapper-sidebar">
-  <header class="sidebar clearfix">
-    <div class="site-info">
-      
-        <a href="/" class="site-avatar"><img src="https://raw.githubusercontent.com/FromEndWorld/LOFFER/master/images/logo.png" /></a>
-       
-      <h1 class="site-name"><a href="/">Cmyun</a></h1>
-      <p class="site-description">能力的提升靠一天天的积累</p>
-    </div>
-  </header>
-
-  <div class="navlist">
-    <nav>
-      
-      
-      <a href="/">首页</a>
-      
-      
-      
-      <a href="/about">关于</a>
-      
-      
-      
-      <a href="/archive">归档</a>
-      
-      
-      
-      <a href="/tags">标签</a>
-      
-      
-    </nav>
-  </div>
-
-  <div class="wrapper-footer-desktop">
-    <footer class="footer">
-      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
-<ul class="svg-icon">
-
-  
-  
-  
-
-  
-
-  
-  <li><a href="mailto:yunwang0911@outlook.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-</ul>
-
-
-
-<p>Copyright (c) 2019 来自中世界</p>
-
-    </footer>
-  </div>
-</div>
-
-    <div id="main" role="main" class="wrapper-content">
-      <article class="posts">
-  <h1>ThreadLocal源码解析</h1>
-
-  <div clsss="meta">
-    <span class="date">
-      2019-08-28
-    </span>
-
-    <ul class="tag">
-      
-      <li>
-        <a href="http://localhost:4000/tags#Java">
-          Java
-        </a>
-      </li>
-      
-    </ul>
-  </div>
-   
-  <div class="entry">
-    <hr />
+I"<hr />
 
 <hr />
 
@@ -368,30 +215,6 @@
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">nextIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">len</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">return</span> <span class="o">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">len</span><span class="o">)</span> <span class="o">?</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>另外，childValue函数如下</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
- * Method childValue is visibly defined in subclass
- * InheritableThreadLocal, but is internally defined here for the
- * sake of providing createInheritedMap factory method without
- * needing to subclass the map class in InheritableThreadLocal.
- * This technique is preferable to the alternative of embedding
- * instanceof tests in methods.
- */</span>
-<span class="no">T</span> <span class="nf">childValue</span><span class="o">(</span><span class="no">T</span> <span class="n">parentValue</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">throw</span> <span class="k">new</span> <span class="nf">UnsupportedOperationException</span><span class="o">();</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>按照注释中说的，这个函数会在子类中定义，之所以在这里也定义，是为了creatInheritedMap函数的便利，而不需要将InheritableThreadLocal类编入ThreadLocalMap中(纯属个人理解加翻译，如果有错误麻烦指正，感激不尽)</p>
-
-<p>而在InheritableThreadLocal的childValue函数中，直接返回parentValue，如下：</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protected</span> <span class="no">T</span> <span class="nf">childValue</span><span class="o">(</span><span class="no">T</span> <span class="n">parentValue</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">parentValue</span><span class="o">;</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
@@ -750,6 +573,26 @@
     <span class="o">}</span>
 <span class="o">}</span>
 
+<span class="kd">class</span> <span class="nc">People</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">People</span><span class="o">(){}</span>
+    <span class="kd">public</span> <span class="nf">People</span><span class="o">(</span><span class="kt">int</span> <span class="n">age</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAge</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">age</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="kt">int</span> <span class="n">age</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
 <span class="kd">class</span> <span class="nc">Animal</span><span class="o">{</span>
     <span class="kd">private</span> <span class="nc">String</span> <span class="n">type</span><span class="o">;</span>
     <span class="kd">public</span> <span class="nf">Animal</span><span class="o">(){};</span>
@@ -779,269 +622,9 @@
 
 <h2 id="4-核心函数-1">4. 核心函数</h2>
 
-<h3 id="1-获取threadlocal数据副本">1. 获取ThreadLocal数据副本</h3>
-
-<p>流程图如下：</p>
-
-<p><img src="D:\git\YunWang.github.io\_posts\Java\assets\1566963195135.png" alt="1566963195135" /></p>
-
-<p>源码如下，从get函数开始</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//获取当前线程中的ThreadLocal的副本</span>
-<span class="kd">public</span> <span class="no">T</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
-    <span class="nc">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
-    <span class="nc">ThreadLocalMap</span> <span class="n">map</span> <span class="o">=</span> <span class="n">getMap</span><span class="o">(</span><span class="n">t</span><span class="o">);</span><span class="c1">//获取ThreadLocalMap</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">map</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-        <span class="nc">ThreadLocalMap</span><span class="o">.</span><span class="na">Entry</span> <span class="n">e</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">getEntry</span><span class="o">(</span><span class="k">this</span><span class="o">);</span><span class="c1">//获取当前ThreadLocal对应的value</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"unchecked"</span><span class="o">)</span>
-            <span class="no">T</span> <span class="n">result</span> <span class="o">=</span> <span class="o">(</span><span class="no">T</span><span class="o">)</span><span class="n">e</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
-            <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="nf">setInitialValue</span><span class="o">();</span><span class="c1">//返回初始值</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>其中，getMap函数就是返回Thread中的ThreadLocal变量</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ThreadLocalMap</span> <span class="nf">getMap</span><span class="o">(</span><span class="nc">Thread</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="na">threadLocals</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>可以看到，ThreadLocalMap每个线程都维护一个。</p>
-
-<p>另外，setInitialValue函数是设置初始值</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="no">T</span> <span class="nf">setInitialValue</span><span class="o">()</span> <span class="o">{</span>
-    <span class="no">T</span> <span class="n">value</span> <span class="o">=</span> <span class="n">initialValue</span><span class="o">();</span><span class="c1">//调用初始化函数</span>
-    <span class="nc">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
-    <span class="nc">ThreadLocalMap</span> <span class="n">map</span> <span class="o">=</span> <span class="n">getMap</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">map</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="n">map</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
-    <span class="k">else</span>
-        <span class="nf">createMap</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span><span class="c1">//创建一个Map</span>
-    <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>先设置一个初值，然后将ThreadLocal与value存到Map中。如果Map为空，则创建一个Map</p>
-
-<p>其中，initialValue函数如下</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protected</span> <span class="no">T</span> <span class="nf">initialValue</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>是的，你没看错，就是直接返回null。所以一般，在创建ThreadLocal变量时，会重写这个函数。</p>
-
-<p>另外一个，创建Map的函数如下：</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">createMap</span><span class="o">(</span><span class="nc">Thread</span> <span class="n">t</span><span class="o">,</span> <span class="no">T</span> <span class="n">firstValue</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">t</span><span class="o">.</span><span class="na">threadLocals</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadLocalMap</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">firstValue</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>createMap函数也很简单，就是调用ThreadLocalMap的构造函数，给当前线程的threadLocals变量赋值。</p>
-
-<h4 id="2-设置threadlocal对应的值">2. 设置ThreadLocal对应的值</h4>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="no">T</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
-    <span class="nc">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
-    <span class="nc">ThreadLocalMap</span> <span class="n">map</span> <span class="o">=</span> <span class="n">getMap</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">map</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="n">map</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
-    <span class="k">else</span>
-        <span class="nf">createMap</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>set函数也很简单了，先获取Map，为null的话，新建一个，否则就将ThreadLocal和value添加道ThreadLocalMap中。</p>
-
-<h4 id="3-删除threadlocal">3. 删除ThreadLocal</h4>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">()</span> <span class="o">{</span>
-    <span class="nc">ThreadLocalMap</span> <span class="n">m</span> <span class="o">=</span> <span class="n">getMap</span><span class="o">(</span><span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">());</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">m</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
-        <span class="n">m</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>首先获取当前线程的ThreadLocalMap，然后删除ThreadLocal对应的entry</p>
-
-<h4 id="4-从父进程继承threadlocalmap">4. 从父进程继承ThreadLocalMap</h4>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
- * Factory method to create map of inherited thread locals.
- * Designed to be called only from Thread constructor.
- */</span>
-<span class="kd">static</span> <span class="nc">ThreadLocalMap</span> <span class="nf">createInheritedMap</span><span class="o">(</span><span class="nc">ThreadLocalMap</span> <span class="n">parentMap</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nf">ThreadLocalMap</span><span class="o">(</span><span class="n">parentMap</span><span class="o">);</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>在线程的构造函数中调用这个函数，从父进程中继承ThreadLocalMap。</p>
-
-<p>下面是对继承ThreadLocalMap的测试</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
- * ThreadLocal测试
- *
- */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ThreadLocalDemo</span> <span class="kd">implements</span> <span class="nc">Runnable</span>
-<span class="o">{</span>
-    <span class="kd">private</span> <span class="nc">ThreadLocal</span><span class="o">&lt;</span><span class="nc">People</span><span class="o">&gt;</span> <span class="n">threadLocal1</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="nc">InheritableThreadLocal</span><span class="o">&lt;</span><span class="nc">Animal</span><span class="o">&gt;</span> <span class="n">threadLocal2</span><span class="o">;</span>
-
-    <span class="kd">public</span> <span class="nf">ThreadLocalDemo</span><span class="o">(</span><span class="nc">ThreadLocal</span> <span class="n">threadLocal1</span><span class="o">,</span><span class="nc">ThreadLocal</span> <span class="n">threadLocal2</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">threadLocal1</span> <span class="o">=</span> <span class="n">threadLocal1</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">threadLocal2</span> <span class="o">=</span> <span class="o">(</span><span class="nc">InheritableThreadLocal</span><span class="o">&lt;</span><span class="nc">Animal</span><span class="o">&gt;)</span> <span class="n">threadLocal2</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">agrs</span><span class="o">)</span>
-    <span class="o">{</span>
-        <span class="nc">ThreadLocal</span><span class="o">&lt;</span><span class="nc">People</span><span class="o">&gt;</span> <span class="n">threadLocal1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadLocal</span><span class="o">&lt;</span><span class="nc">People</span><span class="o">&gt;(){</span>
-            <span class="nd">@Override</span>
-            <span class="kd">protected</span> <span class="nc">People</span> <span class="nf">initialValue</span><span class="o">(){</span>
-                <span class="k">return</span> <span class="k">new</span> <span class="nf">People</span><span class="o">(</span><span class="mi">50</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">};</span>
-        <span class="nc">InheritableThreadLocal</span><span class="o">&lt;</span><span class="nc">Animal</span><span class="o">&gt;</span> <span class="n">threadLocal2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InheritableThreadLocal</span><span class="o">&lt;</span><span class="nc">Animal</span><span class="o">&gt;(){</span>
-            <span class="nd">@Override</span>
-            <span class="kd">protected</span> <span class="nc">Animal</span> <span class="nf">initialValue</span><span class="o">(){</span>
-                <span class="k">return</span> <span class="k">new</span> <span class="nf">Animal</span><span class="o">(</span><span class="s">"Monkey"</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">};</span>
-        <span class="n">threadLocal1</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="k">new</span> <span class="nc">People</span><span class="o">(</span><span class="mi">100</span><span class="o">));</span>
-        <span class="n">threadLocal2</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="k">new</span> <span class="nc">Animal</span><span class="o">(</span><span class="s">"Horse"</span><span class="o">));</span>
-        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Thread["</span><span class="o">+</span><span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">"],"</span><span class="o">+</span><span class="n">threadLocal1</span><span class="o">.</span><span class="na">get</span><span class="o">().</span><span class="na">getAge</span><span class="o">());</span>
-        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Thread["</span><span class="o">+</span><span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">"],"</span><span class="o">+</span><span class="n">threadLocal2</span><span class="o">.</span><span class="na">get</span><span class="o">().</span><span class="na">getType</span><span class="o">());</span>
-        <span class="nc">ThreadLocalDemo</span> <span class="n">td</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadLocalDemo</span><span class="o">(</span><span class="n">threadLocal1</span><span class="o">,</span><span class="n">threadLocal2</span><span class="o">);</span>
-        <span class="nc">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Thread</span><span class="o">(</span><span class="n">td</span><span class="o">);</span>
-        <span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span>
-    <span class="o">{</span> 
-        <span class="nc">People</span> <span class="n">peo</span> <span class="o">=</span> <span class="n">threadLocal1</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
-        <span class="nc">Animal</span> <span class="n">ani</span> <span class="o">=</span> <span class="n">threadLocal2</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
-        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Thread["</span><span class="o">+</span><span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">"],"</span><span class="o">+</span><span class="n">peo</span><span class="o">.</span><span class="na">getAge</span><span class="o">());</span>
-        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Thread["</span><span class="o">+</span><span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">"],"</span><span class="o">+</span><span class="n">ani</span><span class="o">.</span><span class="na">getType</span><span class="o">());</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>结果为</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Thread</span><span class="o">[</span><span class="n">main</span><span class="o">],</span><span class="mi">100</span>
-<span class="nc">Thread</span><span class="o">[</span><span class="n">main</span><span class="o">],</span><span class="nc">Horse</span>
-<span class="nc">Thread</span><span class="o">[</span><span class="nc">Thread</span><span class="o">-</span><span class="mi">0</span><span class="o">],</span><span class="mi">50</span>
-<span class="nc">Thread</span><span class="o">[</span><span class="nc">Thread</span><span class="o">-</span><span class="mi">0</span><span class="o">],</span><span class="nc">Horse</span>
-</code></pre></div></div>
-
-<p>从上面的测试例子，可以看出，Thread中维护了一个ThreadLocalMap和一个InheritableThreadLocal。ThreadLocalMap是不能继承的，而InheritableThreadLocal是可以从父进程中继承的(实际上，在线程的多种创建方式中，除了通过继承AccessControlContext创建的线程外，默认都是会继承父进程的InheritableThreadLocal的)。在创建的时候会调用createInheritedMap函数，从父进程继承InheritableThreadLocal。</p>
-
-<h1 id="4-总结">4. 总结</h1>
-
-<ol>
-  <li>一个线程一个ThreadLocalMap，一个ThreadLocalMap可以保存多个ThreadLocal与Value的键值对</li>
-  <li>线程的ThreadLocalMap，是不可以继承的；而InheritableThreadLocal是可以从父进程继承的。</li>
-  <li>ThreadLocal可以用来实现线程安全，只需将非线程安全的对象使用ThreadLocal封装之后，就会变得线程安全</li>
-  <li>ThreadLocal还用来实现单个线程上下文信息存储，比如交易id</li>
-</ol>
+<h3 id="1">1.</h3>
 
 <h1 id="参考">参考</h1>
 
 <p><a href="https://blog.csdn.net/important0534/article/details/50706774">ThreadLocal 和神奇的 0x61c88647</a></p>
-
-<p><a href="https://www.cnblogs.com/noteless/p/10448283.html#">[InheritableThreadLocal类原理简介使用 父子线程传递数据详解 多线程中篇（十八）]</a></p>
-
-<p><a href="https://droidyue.com/blog/2016/03/13/learning-threadlocal-in-java/">理解Java中的ThreadLocal</a></p>
-
-
-  </div>
-
-  
-<div class="comments">
-	<div id="disqus_thread"></div>
-	<script type="text/javascript">
-
-	    var disqus_shortname = 'cmyun';
-
-	    (function() {
-	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	    })();
-
-	</script>
-	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-
-</article>
-
-<div class="pagination">
-  
-    <span class="prev" >
-      <a href="http://localhost:4000/%E5%8D%9A%E5%AE%A2%E5%BB%BA%E6%88%90/">
-        ← 上一篇
-      </a>
-    </span>
-  
-  
-</div>
-    </div>
-
-    
-
-  </body>
-
-  <div class="wrapper-footer-mobile">
-    <footer class="footer">
-      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
-<ul class="svg-icon">
-
-  
-  
-  
-
-  
-
-  
-  <li><a href="mailto:yunwang0911@outlook.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-</ul>
-
-
-
-<p>Copyright (c) 2019 来自中世界</p>
-
-    </footer>
-
-
-</html>
+:ET
