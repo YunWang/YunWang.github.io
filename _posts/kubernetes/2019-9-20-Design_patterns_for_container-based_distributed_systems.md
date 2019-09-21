@@ -22,7 +22,7 @@ tags: kubernetes
 
 - 容器的传统接口有run(), pause(), stop()
 - 可以有更丰富的接口
-  - “向上看”的视角：metrics, config, logs等，通常用HTTP+JSON来暴露
+  - “向上看”的视角：metrics, config, logs等，通常用HTTP+JSON来暴露 
   - “向下看”的视角：lifecycle（提供生命周期回调钩子）, priority（为了空出资源给高优先级任务，甚至能提前关掉低优先级任务），"replicate yourself"（迅速创建一组相同的服务容器来应对突发流量）
 
 ### 2.2 Single-node, multi-container application patterns
